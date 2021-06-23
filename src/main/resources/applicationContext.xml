@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.3.xsd
+         http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- ①：对包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
+    <context:component-scan base-package="com.hcx.dao"/>
+    <context:component-scan base-package="com.hcx.service"/>
+    <!--这里不扫描controller-->
+
+
+
+    <!-- 配置dbcp数据库连接池 -->
+
+    <!-- <context:property-placeholder location="classpath:db.properties"/> -->
+    <!--数据库配置 -->
+    <!-- 数据库连接池 -->
+    <context:property-placeholder location="classpath:db.properties"/>
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!--<property name="maxTotal" value="${jdbc.maxTotal}"/>-->
+        <!--<property name="maxIdle" value="${jdbc.maxIdle}"/>-->
+        <!--<property name="initialSize" value="${jdbc.initialSize}"/>-->
+    </bean>
+
+
+    <!-- 配置事务管理器 -->
+    <!--支持事务注解的（@Transactional）-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+    <!-- 配置会话工厂SqlSessionFactory -->
+    <!--用来创建sqlSession对象的，而sqlSession用来操作数据库的-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:Mybatis-config.xml"/>
+    </bean>
+
+    <!-- 在spring容器中配置mapper的扫描器产生的动态代理对象在spring的容器中自动注册，bean的id就是mapper类名（首字母小写）-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 指定扫描包的路径，就是mapper接口的路径，多个包中间以 半角逗号隔开   -->
+        <property name="basePackage" value="com.hcx.dao"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcx.dao.LocationMapper" >
+  <resultMap id="BaseResultMap" type="com.hcx.bean.Location" >
+    <id column="location_id" property="locationId" jdbcType="INTEGER" />
+    <result column="location_city" property="locationCity" jdbcType="VARCHAR" />
+    <result column="location_district" property="locationDistrict" jdbcType="VARCHAR" />
+    <result column="location_address" property="locationAddress" jdbcType="VARCHAR" />
+    <result column="location_alias" property="locationAlias" jdbcType="VARCHAR" />
+    <result column="location_amount" property="locationAmount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    location_id, location_city, location_district, location_address, location_alias, 
+    location_amount
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hcx.bean.LocationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from location
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from location
+    where location_id = #{locationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from location
+    where location_id = #{locationId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hcx.bean.LocationExample" >
+    delete from location
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hcx.bean.Location" >
+    insert into location (location_id, location_city, location_district, 
+      location_address, location_alias, location_amount
+      )
+    values (#{locationId,jdbcType=INTEGER}, #{locationCity,jdbcType=VARCHAR}, #{locationDistrict,jdbcType=VARCHAR}, 
+      #{locationAddress,jdbcType=VARCHAR}, #{locationAlias,jdbcType=VARCHAR}, #{locationAmount,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hcx.bean.Location" >
+    insert into location
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="locationId != null" >
+        location_id,
+      </if>
+      <if test="locationCity != null" >
+        location_city,
+      </if>
+      <if test="locationDistrict != null" >
+        location_district,
+      </if>
+      <if test="locationAddress != null" >
+        location_address,
+      </if>
+      <if test="locationAlias != null" >
+        location_alias,
+      </if>
+      <if test="locationAmount != null" >
+        location_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="locationId != null" >
+        #{locationId,jdbcType=INTEGER},
+      </if>
+      <if test="locationCity != null" >
+        #{locationCity,jdbcType=VARCHAR},
+      </if>
+      <if test="locationDistrict != null" >
+        #{locationDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="locationAddress != null" >
+        #{locationAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="locationAlias != null" >
+        #{locationAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="locationAmount != null" >
+        #{locationAmount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hcx.bean.LocationExample" resultType="java.lang.Integer" >
+    select count(*) from location
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update location
+    <set >
+      <if test="record.locationId != null" >
+        location_id = #{record.locationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.locationCity != null" >
+        location_city = #{record.locationCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationDistrict != null" >
+        location_district = #{record.locationDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationAddress != null" >
+        location_address = #{record.locationAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationAlias != null" >
+        location_alias = #{record.locationAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationAmount != null" >
+        location_amount = #{record.locationAmount,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update location
+    set location_id = #{record.locationId,jdbcType=INTEGER},
+      location_city = #{record.locationCity,jdbcType=VARCHAR},
+      location_district = #{record.locationDistrict,jdbcType=VARCHAR},
+      location_address = #{record.locationAddress,jdbcType=VARCHAR},
+      location_alias = #{record.locationAlias,jdbcType=VARCHAR},
+      location_amount = #{record.locationAmount,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hcx.bean.Location" >
+    update location
+    <set >
+      <if test="locationCity != null" >
+        location_city = #{locationCity,jdbcType=VARCHAR},
+      </if>
+      <if test="locationDistrict != null" >
+        location_district = #{locationDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="locationAddress != null" >
+        location_address = #{locationAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="locationAlias != null" >
+        location_alias = #{locationAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="locationAmount != null" >
+        location_amount = #{locationAmount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where location_id = #{locationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hcx.bean.Location" >
+    update location
+    set location_city = #{locationCity,jdbcType=VARCHAR},
+      location_district = #{locationDistrict,jdbcType=VARCHAR},
+      location_address = #{locationAddress,jdbcType=VARCHAR},
+      location_alias = #{locationAlias,jdbcType=VARCHAR},
+      location_amount = #{locationAmount,jdbcType=INTEGER}
+    where location_id = #{locationId,jdbcType=INTEGER}
+  </update>
+</mapper>

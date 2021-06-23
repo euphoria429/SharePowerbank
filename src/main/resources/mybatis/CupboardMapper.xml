@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcx.dao.CupboardMapper" >
+  <resultMap id="BaseResultMap" type="com.hcx.bean.Cupboard" >
+    <id column="cupboard_id" property="cupboardId" jdbcType="INTEGER" />
+    <result column="location_id" property="locationId" jdbcType="INTEGER" />
+    <result column="pobk_num" property="pobkNum" jdbcType="INTEGER" />
+    <result column="pobk_available_num" property="pobkAvailableNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cupboard_id, location_id, pobk_num, pobk_available_num
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hcx.bean.CupboardExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cupboard
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cupboard
+    where cupboard_id = #{cupboardId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cupboard
+    where cupboard_id = #{cupboardId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hcx.bean.CupboardExample" >
+    delete from cupboard
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hcx.bean.Cupboard" >
+    insert into cupboard (cupboard_id, location_id, pobk_num, 
+      pobk_available_num)
+    values (#{cupboardId,jdbcType=INTEGER}, #{locationId,jdbcType=INTEGER}, #{pobkNum,jdbcType=INTEGER}, 
+      #{pobkAvailableNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hcx.bean.Cupboard" >
+    insert into cupboard
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cupboardId != null" >
+        cupboard_id,
+      </if>
+      <if test="locationId != null" >
+        location_id,
+      </if>
+      <if test="pobkNum != null" >
+        pobk_num,
+      </if>
+      <if test="pobkAvailableNum != null" >
+        pobk_available_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cupboardId != null" >
+        #{cupboardId,jdbcType=INTEGER},
+      </if>
+      <if test="locationId != null" >
+        #{locationId,jdbcType=INTEGER},
+      </if>
+      <if test="pobkNum != null" >
+        #{pobkNum,jdbcType=INTEGER},
+      </if>
+      <if test="pobkAvailableNum != null" >
+        #{pobkAvailableNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hcx.bean.CupboardExample" resultType="java.lang.Integer" >
+    select count(*) from cupboard
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cupboard
+    <set >
+      <if test="record.cupboardId != null" >
+        cupboard_id = #{record.cupboardId,jdbcType=INTEGER},
+      </if>
+      <if test="record.locationId != null" >
+        location_id = #{record.locationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pobkNum != null" >
+        pobk_num = #{record.pobkNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.pobkAvailableNum != null" >
+        pobk_available_num = #{record.pobkAvailableNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cupboard
+    set cupboard_id = #{record.cupboardId,jdbcType=INTEGER},
+      location_id = #{record.locationId,jdbcType=INTEGER},
+      pobk_num = #{record.pobkNum,jdbcType=INTEGER},
+      pobk_available_num = #{record.pobkAvailableNum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hcx.bean.Cupboard" >
+    update cupboard
+    <set >
+      <if test="locationId != null" >
+        location_id = #{locationId,jdbcType=INTEGER},
+      </if>
+      <if test="pobkNum != null" >
+        pobk_num = #{pobkNum,jdbcType=INTEGER},
+      </if>
+      <if test="pobkAvailableNum != null" >
+        pobk_available_num = #{pobkAvailableNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cupboard_id = #{cupboardId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hcx.bean.Cupboard" >
+    update cupboard
+    set location_id = #{locationId,jdbcType=INTEGER},
+      pobk_num = #{pobkNum,jdbcType=INTEGER},
+      pobk_available_num = #{pobkAvailableNum,jdbcType=INTEGER}
+    where cupboard_id = #{cupboardId,jdbcType=INTEGER}
+  </update>
+</mapper>
