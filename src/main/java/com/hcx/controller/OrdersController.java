@@ -1,6 +1,6 @@
 package com.hcx.controller;
 
-import com.hcx.service.OrderService;
+import com.hcx.service.OrdersService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,9 +13,9 @@ import javax.annotation.Resource;
  */
 @Controller
 @RequestMapping("/order")
-public class OrderController {
+public class OrdersController {
     @Resource
-    private OrderService orderService;
+    private OrdersService ordersService;
 
 //    @RequestMapping(value="findAll",produces="text/html;charset=utf-8")
 //    public @ResponseBody String findAll(){

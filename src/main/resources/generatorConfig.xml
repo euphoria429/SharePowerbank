@@ -60,7 +60,7 @@
         <table tableName="cost" domainObjectName="Cost"></table>
         <table tableName="cupboard" domainObjectName="Cupboard"></table>
         <table tableName="location" domainObjectName="Location"></table>
-        <table tableName="order" domainObjectName="Order"></table>
+        <table tableName="orders" domainObjectName="Orders"></table>
         <table tableName="powerbank" domainObjectName="Powerbank"></table>
         <table tableName="user" domainObjectName="User"></table>
 

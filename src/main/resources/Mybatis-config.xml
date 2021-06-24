@@ -23,7 +23,7 @@
         <mapper resource="mapper/CostMapper.xml"></mapper>
         <mapper resource="mapper/CupboardMapper.xml"></mapper>
         <mapper resource="mapper/LocationMapper.xml"></mapper>
-        <mapper resource="mapper/OrderMapper.xml"></mapper>
+        <mapper resource="mapper/OrdersMapper.xml"></mapper>
         <mapper resource="mapper/PowerbankMapper.xml"></mapper>
         <mapper resource="mapper/UserMapper.xml"></mapper>
     </mappers>

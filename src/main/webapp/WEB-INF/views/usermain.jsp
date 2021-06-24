@@ -189,7 +189,7 @@
                     //         }
                     //     }
                     // });
-                    layer.alert("归还+查看ID : " + data.cupboardId + " 的行");
+                    layer.alert("借用+查看ID : " + data.cupboardId + " 的行");
                 });
             }
             else if (obj.event === 'retu') {

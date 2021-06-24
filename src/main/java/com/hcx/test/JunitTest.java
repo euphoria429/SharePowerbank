@@ -1,18 +1,13 @@
 package com.hcx.test;
 
-import com.hcx.bean.Admin;
+import com.hcx.bean.Orders;
 import com.hcx.bean.User;
-import com.hcx.dao.AdminMapper;
-import com.hcx.dao.PowerbankMapper;
-import com.hcx.dao.UserMapper;
+import com.hcx.dao.*;
 import com.hcx.service.AdminService;
-import com.hcx.service.OrderService;
+import com.hcx.service.OrdersService;
 import com.hcx.service.PowerbankService;
 import com.hcx.service.UserService;
-import com.hcx.service.impl.AdminServiceImpl;
 import org.junit.Test;
-import org.omg.CORBA.PUBLIC_MEMBER;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -38,14 +33,22 @@ public class JunitTest extends BaseTest {
     private PowerbankMapper powerbankMapper;
 
     @Resource
-    private OrderService orderService;
+    private OrdersService ordersService;
+    @Resource
+    private OrdersMapper ordersMapper;
+
+    @Resource
+    private LocationMapper locationMapper;
 
     @Test
     public void test01(){
         //mapper层测试
 
-        System.out.println(adminMapper.selectByPrimaryKey(1).getAdminId());
-        System.out.println(adminMapper.findByAccount("admin").getAdminId());
+//        System.out.println(adminMapper.selectByPrimaryKey(1).getAdminId());
+//        System.out.println(adminMapper.findByAccount("admin").getAdminId());
+            System.out.println(ordersMapper.selectByPrimaryKey(1).getOrderId());
+//        System.out.println(powerbankMapper.countByExample(null));
+//        System.out.println(locationMapper.countByExample(null));
     }
     @Test
     public void test02(){
@@ -64,8 +67,13 @@ public class JunitTest extends BaseTest {
 //        }
 //        System.out.println(userService.login("17520098429","123456"));
 //        System.out.println(powerbankService.countByCupId(1));
-        System.out.println(orderService.selectByUserId(2));
-        System.out.println(orderService.selectAll());
+//        System.out.println(ordersService.selectByUserId(2));
+//        System.out.println(ordersService.selectAll());
+
+        List<Orders> list=ordersService.selectByUserId(1);
+        for (Orders order:list){
+            System.out.println(order.getOrderCreatetime());
+        }
     }
 
 }
