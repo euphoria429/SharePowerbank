@@ -16,6 +16,7 @@
 
     <title>用户中心</title>
     <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+    <script src="${pageContext.request.contextPath}/static/js/jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
 
     <style type="text/css">
         html,body{margin:0;padding:0;}
@@ -92,7 +93,7 @@
                 , {field: 'right', title: '操作', toolbar: "#barDemo"}
             ]]
             , page: false
-            , height: 298
+            , height: 700
             , id: 'testTable'
         });
     });
@@ -104,25 +105,28 @@
             var data = obj.data;
             if (obj.event === 'pay') {
                 layer.confirm('确定支付', function (index) {
-                    // $.ajax({
-                    //     url: "/dept/deleteDept",
-                    //     type: "POST",
-                    //     data: {"id": data.cupboardId},
-                    //     dataType: "json",
-                    //     success: function (data) {
-                    //         var json = JSON.parse(data);
-                    //         if (json.result == "1") {
-                    //             // obj.del();
-                    //             //关闭弹框
-                    //             layer.close(index);
-                    //             layer.msg("租借成功", {icon: 6});
-                    //             $(".layui-laypage-btn").click()
-                    //         } else {
-                    //             layer.msg("租借失败", {icon: 5});
-                    //         }
-                    //     }
-                    // });
-                    layer.alert("支付+查看ID : " + data.orderId + " 的行");
+                    if(data.orderStatus!="未支付"){
+                        layer.close(index);
+                        layer.msg("不在可支付状态", {icon: 5});
+                    }else{
+                        $.ajax({
+                            url: "/orders/payorder",
+                            type: "POST",
+                            data: {"order_id": data.orderId,"username":name},
+                            success: function (data) {
+                                var json = JSON.parse(data);
+                                if (json.result == "1") {
+                                    //关闭弹框
+                                    layer.close(index);
+                                    layer.msg("支付成功", {icon: 6});
+                                } else {
+                                    layer.msg("支付失败", {icon: 5});
+                                }
+                            }
+                        });
+                    }
+
+                    // layer.alert("支付+查看ID : " + data.orderId + " 的行"+name);
                 });
             }
         });

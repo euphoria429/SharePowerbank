@@ -1,7 +1,9 @@
 package com.hcx.service;
 
 import com.hcx.bean.Orders;
+import org.aspectj.weaver.ast.Or;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -14,4 +16,12 @@ public interface OrdersService {
     int countById(int id);
     int countAll();
     int createOrder(Orders orders);
+
+    int countReturnOrder(int id);
+    List<Orders> selectNotReturn(int userid);
+
+    int calOrder(int order_id) throws ParseException;
+    Orders selectByOrderId(Integer orderId);
+
+    int payOrder(int order_id);
 }

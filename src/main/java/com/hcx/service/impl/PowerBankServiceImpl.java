@@ -36,4 +36,12 @@ public class PowerBankServiceImpl implements PowerbankService {
         powerbank.setPobkStatus("lent");
         return powerbankMapper.updateByPrimaryKey(powerbank);
     }
+
+    public int avaliStatus(int cup_id, int pobk_id) {
+        Powerbank powerbank=new Powerbank();
+        powerbank.setPobkId(pobk_id);
+        powerbank.setPobkCupboardId(cup_id);
+        powerbank.setPobkStatus("available");
+        return powerbankMapper.updateByPrimaryKey(powerbank);
+    }
 }

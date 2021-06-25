@@ -34,11 +34,25 @@ public class CupboardServiceImpl implements CupboardService {
         return cupboardMapper.selectByPrimaryKey(id).getPobkAvailableNum();
     }
 
+    public int findTotal(int id) {
+        return cupboardMapper.selectByPrimaryKey(id).getPobkNum();
+    }
+
     public int lentupdate(Integer cupboardId) {
         int num=findAvailable(cupboardId)-1;//数量-1
         CupboardExample example=new CupboardExample();
         CupboardExample.Criteria criteria=example.createCriteria();
         criteria.andCupboardIdEqualTo(cupboardId);
+        Cupboard cupboard=new Cupboard();
+        cupboard.setPobkAvailableNum(num);
+        return cupboardMapper.updateByExampleSelective(cupboard,example);
+    }
+
+    public int avaliUpdate(int cup_id) {
+        int num=findAvailable(cup_id)+1;//数量+1
+        CupboardExample example=new CupboardExample();
+        CupboardExample.Criteria criteria=example.createCriteria();
+        criteria.andCupboardIdEqualTo(cup_id);
         Cupboard cupboard=new Cupboard();
         cupboard.setPobkAvailableNum(num);
         return cupboardMapper.updateByExampleSelective(cupboard,example);

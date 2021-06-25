@@ -64,4 +64,17 @@ public class UserServiceImpl implements UserService {
         criteria.andUserAliasEqualTo(Alias);
         return userMapper.selectByExample(example);
     }
+
+    public int deduct(int user_id, int cost) {
+        float balance=userMapper.selectByPrimaryKey(user_id).getUserBalance();
+        int b=(int)balance;
+        int c=b-cost;//扣款之后的余额;
+        UserExample example=new UserExample();
+        UserExample.Criteria criteria=example.createCriteria();
+        criteria.andUserIdEqualTo(user_id);
+        User user=new User();
+        user.setUserBalance((float)c);
+        return userMapper.updateByExampleSelective(user,example);
+    }
+
 }

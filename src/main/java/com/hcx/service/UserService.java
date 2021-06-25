@@ -17,4 +17,6 @@ public interface UserService {
     public boolean login(String phoneNumber,String password);
     public List<User> selectAll();
     public List<User> selectByAlias(String Alias);
+
+    int deduct(int user_id,int cost);
 }

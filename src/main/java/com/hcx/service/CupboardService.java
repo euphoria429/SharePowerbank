@@ -12,6 +12,9 @@ import java.util.List;
 public interface CupboardService {
     List<Cupboard> selectAll(CupboardExample example);
     Cupboard selectByPrimaryKey(Integer cupboardId);
-    int findAvailable(int id);
+    int findAvailable(int id);//查询可用充电宝数量
+    int findTotal(int id);//查询总数
     int lentupdate(Integer cupboardId);//借出后数量-1
+
+    int avaliUpdate(int cup_id);
 }

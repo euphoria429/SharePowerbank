@@ -10,4 +10,6 @@ public interface PowerbankService {
     public int countByCupId(int cupId);
     Powerbank selectOne(int cupId);
     int lentStatus(Integer pobkId);//取出更新充电宝信息
+
+    int avaliStatus(int cup_id, int pobk_id);
 }

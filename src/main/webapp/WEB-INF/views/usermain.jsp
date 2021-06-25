@@ -59,7 +59,7 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <div style="width:697px;height:550px;border:#ccc solid 1px;" id="container"></div>
+            <div style="width:800px;height:550px;border:#ccc solid 1px;" id="container"></div>
             <table class="layui-hide" id="test" lay-filter="demo"></table>
             <script type="text/html" id="barDemo">
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="lent">借用</a>
@@ -67,6 +67,16 @@
             </script>
         </div>
     </div>
+    <%--渲染--%>
+    <div id="openOrderBox" style="display: none; padding: 10px;">
+        <table id="openOrderTable" lay-filter="openOrderTable">
+            <h4 style="text-align: center">订单列表</h4>
+            <script type="text/html" id="barDemo2">
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="retu2">归还</a>
+            </script>
+        </table>
+    </div>
+
 </div>
 <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
 <script>
@@ -189,7 +199,14 @@
                 });
             }
             else if (obj.event === 'retu') {
-                layer.confirm('确定归还', function (index) {
+                layer.open({
+                    type:2,
+                    title:'请选择未归还的订单',
+                    shadeClose:false,           //弹框外的地方是否可以点击
+                    offset:'30%',
+                    area:['60%','50%'],
+                    content:'/orders/orderpage?cup_id='+data.cupboardId
+                });
                     // $.ajax({
                     //     url: "/cupboard/returnbank",
                     //     type: "POST",
@@ -208,8 +225,7 @@
                     //         }
                     //     }
                     // });
-                    layer.alert("归还：查看ID : " + data.cupboardId + " 的行");
-                });
+                    // layer.alert("归还：查看ID : " + data.cupboardId + " 的行");
             }
         });
     });
