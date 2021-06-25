@@ -1,16 +1,12 @@
 package com.hcx.test;
 
-import com.hcx.bean.Orders;
-import com.hcx.bean.User;
 import com.hcx.dao.*;
-import com.hcx.service.AdminService;
-import com.hcx.service.OrdersService;
-import com.hcx.service.PowerbankService;
-import com.hcx.service.UserService;
+import com.hcx.service.*;
 import org.junit.Test;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @Author Ninomiya_Mioto
@@ -40,15 +36,22 @@ public class JunitTest extends BaseTest {
     @Resource
     private LocationMapper locationMapper;
 
+
+    @Resource
+    private CupboardMapper cupboardMapper;
+    @Resource
+    private CupboardService cupboardService;
+
     @Test
     public void test01(){
         //mapper层测试
 
 //        System.out.println(adminMapper.selectByPrimaryKey(1).getAdminId());
 //        System.out.println(adminMapper.findByAccount("admin").getAdminId());
-            System.out.println(ordersMapper.selectByPrimaryKey(1).getOrderId());
+//            System.out.println(ordersMapper.selectByPrimaryKey(1).getOrderId());
 //        System.out.println(powerbankMapper.countByExample(null));
 //        System.out.println(locationMapper.countByExample(null));
+        System.out.println(powerbankMapper.selectOne(1).getPobkId());
     }
     @Test
     public void test02(){
@@ -65,15 +68,28 @@ public class JunitTest extends BaseTest {
 //        for(User users:list){
 //            System.out.println(users.getUserAlias());
 //        }
-//        System.out.println(userService.login("17520098429","123456"));
+//        System.out.println(userService.login("16626713429","123456"));
 //        System.out.println(powerbankService.countByCupId(1));
 //        System.out.println(ordersService.selectByUserId(2));
 //        System.out.println(ordersService.selectAll());
+//        System.out.println(userService.selectByPhone("17520098429").getUserId());
+//        System.out.println(ordersService.countById(1));
+//        List<Orders> list=ordersService.selectByUserId(1);
+//        for (Orders order:list){
+//            System.out.println(order.getOrderCreatetime());
+//        }
+//        Log log=new Log(1l,"查询","com.hcx","123456");
+//        log.setCreateDate(new Date());
+//        logService.save(log);
+//        System.out.println(cupboardService.findAvailable(1));
+//        System.out.println(powerbankService.lentStatus(5));
+//        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+//        String date=simpleDateFormat.format(new Date());
+//        System.out.println(date);
+//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+//        System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+        System.out.println(cupboardService.lentupdate(1));
 
-        List<Orders> list=ordersService.selectByUserId(1);
-        for (Orders order:list){
-            System.out.println(order.getOrderCreatetime());
-        }
     }
 
 }

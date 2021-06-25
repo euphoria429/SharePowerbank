@@ -11,4 +11,7 @@ import java.util.List;
 public interface OrdersService {
     public List<Orders> selectByUserId(int userid);
     List<Orders> selectAll();
+    int countById(int id);
+    int countAll();
+    int createOrder(Orders orders);
 }

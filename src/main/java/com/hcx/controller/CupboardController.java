@@ -22,7 +22,7 @@ public class CupboardController {
 
     @RequestMapping(value="findInfo",produces="text/html;charset=utf-8")
     public @ResponseBody String findAll(){
-        List<Cupboard> cupboard =cupboardService.selectByExample(null);
+        List<Cupboard> cupboard =cupboardService.selectAll(null);
         JSONArray json= JSONArray.fromObject(cupboard);
         String js=json.toString();
         String jso="{\"code\":0,\"msg\":\"\",\"count\":"+3+",\"data\":"+js+"}";

@@ -1,5 +1,6 @@
 package com.hcx.service.impl;
 
+import com.hcx.bean.Powerbank;
 import com.hcx.bean.PowerbankExample;
 import com.hcx.dao.PowerbankMapper;
 import com.hcx.service.PowerbankService;
@@ -14,10 +15,25 @@ import org.springframework.stereotype.Service;
 public class PowerBankServiceImpl implements PowerbankService {
     @Autowired
     private PowerbankMapper powerbankMapper;
-    public int countByCupId(int CupId) {
+    public int countByCupId(int cupId) {
         PowerbankExample example=new PowerbankExample();
         PowerbankExample.Criteria criteria=example.createCriteria();
-        criteria.andPobkCupboardIdEqualTo(CupId);
+        criteria.andPobkCupboardIdEqualTo(cupId);
         return powerbankMapper.countByExample(example);
+    }
+
+    public Powerbank selectOne(int cupId) {
+        return powerbankMapper.selectOne(cupId);
+    }
+
+    public int lentStatus(Integer pobkId) {
+//        PowerbankExample example=new PowerbankExample();
+//        PowerbankExample.Criteria criteria=example.createCriteria();
+//        criteria.andPobkIdEqualTo(pobkId);
+        Powerbank powerbank=new Powerbank();
+        powerbank.setPobkId(pobkId);
+        powerbank.setPobkCupboardId(0);
+        powerbank.setPobkStatus("lent");
+        return powerbankMapper.updateByPrimaryKey(powerbank);
     }
 }

@@ -22,10 +22,6 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @RequestMapping("/returnpage")
-    public String return1(){
-        return "userreturn";
-    }
     @RequestMapping("/mainpage")
     public String return2(){
         return "usermain";

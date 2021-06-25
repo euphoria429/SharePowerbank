@@ -29,4 +29,20 @@ public class OrdersServiceImpl implements OrdersService {
     public List<Orders> selectAll() {
         return ordersMapper.selectByExample(null);
     }
+
+    public int countById(int id) {
+        OrdersExample example=new OrdersExample();
+        OrdersExample.Criteria criteria=example.createCriteria();
+        criteria.andOrderUseridEqualTo(id);
+        return ordersMapper.countByExample(example);
+    }
+
+    public int countAll() {
+        return ordersMapper.countByExample(null);
+    }
+
+    public int createOrder(Orders orders) {
+        return ordersMapper.insert(orders);
+    }
+
 }

@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -63,6 +64,40 @@ public class  MockTestController
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)//数据的格式
 //                                .param("id","1")   //添加参数(可以添加多个)
                         //.param("id","3")   //添加参数(可以添加多个)
+                )
+                .andExpect(status().isOk())    //返回的状态是200
+                .andDo(print())         //打印出请求和相应的内容
+                .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
+        System.out.println("-----返回的json = " + responseString);
+    }
+
+    @Test
+    public void getAllCategoryTest3() throws Exception
+    {
+        String responseString = mockMvc.perform
+                (
+                        post("/orders/findOrderByName")          //请求的url,请求的方法是get
+                                //get("/user/showUser2")          //请求的url,请求的方法是get
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)//数据的格式
+                                .param("username","17520098429")   //添加参数(可以添加多个)
+                        //.param("id","3")   //添加参数(可以添加多个)
+                )
+                .andExpect(status().isOk())    //返回的状态是200
+                .andDo(print())         //打印出请求和相应的内容
+                .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
+        System.out.println("-----返回的json = " + responseString);
+    }
+
+    @Test
+    public void getAllCategoryTest4() throws Exception
+    {
+        String responseString = mockMvc.perform
+                (
+                        get("/orders/lentPobk")          //请求的url,请求的方法是get
+                                //get("/user/showUser2")          //请求的url,请求的方法是get
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)//数据的格式
+                                .param("cup_id","1")   //添加参数(可以添加多个)
+                        .param("username","17520098429")   //添加参数(可以添加多个)
                 )
                 .andExpect(status().isOk())    //返回的状态是200
                 .andDo(print())         //打印出请求和相应的内容

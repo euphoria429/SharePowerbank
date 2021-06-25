@@ -48,7 +48,6 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree layui-bg-black" lay-filter="test">
                 <li class="layui-nav-item"><a href="/user/mainpage">借充电宝</a></li>
-                <li class="layui-nav-item"><a href="/user/returnpage">归还充电宝</a></li>
                 <li class="layui-nav-item"><a href="">历史订单</a></li>
                 <li class="layui-nav-item"><a href="/user/infopage">个人信息</a></li>
             </ul>
@@ -58,12 +57,11 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <div style="width:697px;height:550px;border:#ccc solid 1px;" id="container">
                 <table class="layui-hide" id="test" lay-filter="demo"></table>
                 <script type="text/html" id="barDemo">
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="pay">支付</a>
                 </script>
-            </div>
+
         </div>
     </div>
 
@@ -74,16 +72,23 @@
 </script>
 
 <script type="text/javascript">
+    var name= '<%=request.getSession().getAttribute("username")%>';
+    // alert(name);
     layui.use('table', function () {
         var table = layui.table;
         table.render({
             elem: '#test'
-            , url: '/order/findOrder'
+            , url: '/orders/findOrderByName'
+            ,method:'post'
+            ,where:{"username":name}
             , cols: [[
-                {field: 'cupboardId', width: 80, title: 'ID', sort: true}
-                , {field: 'locationId', width: 120, title: '地址id', sort: true}
-                , {field: 'pobkAvailableNum', width: 120, title: '可用充电宝', sort: true}
-                ,{field: 'pobkNum', width: 120, title: '充电宝总数'}
+                {field: 'orderId', width: 80, title: '订单编号', sort: true}
+                , {field: 'orderUserid', width: 120, title: '用户id', sort: true}
+                , {field: 'orderPobkid', width: 120, title: '充电宝编号', sort: true}
+                ,{field: 'orderCreatetime', width: 200, title: '创建时间'}
+                ,{field: 'orderFinishtime', width: 200, title: '结束时间'}
+                ,{field: 'orderCost', width: 120, title: '结算金额'}
+                ,{field: 'orderStatus', width: 120, title: '订单状态'}
                 , {field: 'right', title: '操作', toolbar: "#barDemo"}
             ]]
             , page: false

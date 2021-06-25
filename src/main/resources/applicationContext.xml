@@ -4,12 +4,13 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:beans="http://www.springframework.org/schema/beans"
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
          http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
          http://www.springframework.org/schema/context
          http://www.springframework.org/schema/context/spring-context-4.3.xsd
          http://www.springframework.org/schema/mvc
-         http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+         http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- ①：对包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
     <context:component-scan base-package="com.hcx.dao"/>
@@ -42,6 +43,31 @@
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
+    <!--<bean id="MyAspect" class="com.hcx.aspect.MyAspect"></bean>-->
+    <!--3 aop编程-->
+    <aop:config>
+        <!--配置切面-->
+        <aop:aspect ref="MyAspect">
+            <!--3.1 配置切入点，通知最后增强哪些方法-->
+            <aop:pointcut id="myPointCut" expression="execution(* com.hcx.service.*.*(..))"/>
+            <aop:pointcut id="myPointCut" expression="execution(* com.hcx.controller.*.*(..))"/>
+            <!--3.2 关联通知Advice和切入点pointCut-->
+            <!--3.2.1 前置通知-->
+            <!--<aop:before method="myBefore" pointcut-ref="myPointCut"></aop:before>-->
+            <!--&lt;!&ndash;3.2.2 后置通知，在方法返回之后执行，就可以获得返回值-->
+            <!--returning：指定形参名，通过该形参访问目标方法抛出的异常&ndash;&gt;-->
+            <!--<aop:after-returning method="myAfterReturning" pointcut-ref="myPointCut" returning="joinPoint"></aop:after-returning>-->
+            <!--&lt;!&ndash;3.2.3 环绕通知&ndash;&gt;-->
+            <!--<aop:around method="myAround" pointcut-ref="myPointCut"></aop:around>-->
+            <!--&lt;!&ndash;3.2.4 抛出通知：用于处理程序发生异常&ndash;&gt;-->
+            <!--&lt;!&ndash;注意：如果程序没有异常，将不会执行增强&ndash;&gt;-->
+            <!--&lt;!&ndash;throwing属性：用于设置通知第二个参数的名称，类型Throwable&ndash;&gt;-->
+            <!--<aop:after-throwing method="myAfterThrowing" pointcut-ref="myPointCut" throwing="e"></aop:after-throwing>-->
+            <!--&lt;!&ndash;3.2.5 最终通知：无论程序发生任何事情，都将执行&ndash;&gt;-->
+            <!--<aop:after method="myAfter" pointcut-ref="myPointCut"></aop:after>-->
+        </aop:aspect>
+    </aop:config>
+    <aop:aspectj-autoproxy  proxy-target-class="true"/>
 
     <!-- 配置会话工厂SqlSessionFactory -->
     <!--用来创建sqlSession对象的，而sqlSession用来操作数据库的-->

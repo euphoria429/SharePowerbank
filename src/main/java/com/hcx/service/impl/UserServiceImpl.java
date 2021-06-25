@@ -6,6 +6,9 @@ import com.hcx.dao.UserMapper;
 import com.hcx.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,9 +43,13 @@ public class UserServiceImpl implements UserService {
         return userMapper.findbyuser_phone(userPhone);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, readOnly = false)
+//    @MyLog(value = "登录")
     public boolean login(String phoneNumber, String password) {
         if(phoneNumber==null||password==null) return false;
+
         User user=userMapper.findbyuser_phone(phoneNumber);
+
         if(user==null) return false;
         return user.getUserPassword().equals(password);
     }

@@ -50,7 +50,6 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree layui-bg-black" lay-filter="test">
                 <li class="layui-nav-item"><a href="">借充电宝</a></li>
-                <li class="layui-nav-item"><a href="/user/returnpage">归还充电宝</a></li>
                 <li class="layui-nav-item"><a href="/user/orderpage">历史订单</a></li>
                 <li class="layui-nav-item"><a href="/user/infopage">个人信息</a></li>
             </ul>
@@ -91,7 +90,7 @@
     //
     // }
 
-
+    var name= '<%=request.getSession().getAttribute("username")%>';
 
     var map = new BMapGL.Map('container');
     var point = new BMapGL.Point(113.40592,23.060042);
@@ -171,25 +170,22 @@
             var data = obj.data;
             if (obj.event === 'lent') {
                 layer.confirm('确定租借', function (index) {
-                    // $.ajax({
-                    //     url: "/dept/deleteDept",
-                    //     type: "POST",
-                    //     data: {"id": data.cupboardId},
-                    //     dataType: "json",
-                    //     success: function (data) {
-                    //         var json = JSON.parse(data);
-                    //         if (json.result == "1") {
-                    //             // obj.del();
-                    //             //关闭弹框
-                    //             layer.close(index);
-                    //             layer.msg("租借成功", {icon: 6});
-                    //             $(".layui-laypage-btn").click()
-                    //         } else {
-                    //             layer.msg("租借失败", {icon: 5});
-                    //         }
-                    //     }
-                    // });
-                    layer.alert("借用+查看ID : " + data.cupboardId + " 的行");
+                    $.ajax({
+                        url: "/orders/lentPobk",
+                        type: "POST",
+                        data: {"cup_id": data.cupboardId,"username":name},
+                        success: function (data) {
+                            var json = JSON.parse(data);
+                            if (json.result == "1") {
+                                //关闭弹框
+                                layer.close(index);
+                                layer.msg("租借成功", {icon: 6});
+                            } else {
+                                layer.msg("租借失败", {icon: 5});
+                            }
+                        }
+                    });
+                    // layer.alert("借用+查看ID : " + data.cupboardId + " 的行");
                 });
             }
             else if (obj.event === 'retu') {
