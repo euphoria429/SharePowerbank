@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcx.dao.OrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.hcx.bean.Orders" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_userid" property="orderUserid" jdbcType="INTEGER" />
+    <result column="order_pobkid" property="orderPobkid" jdbcType="INTEGER" />
+    <result column="order_createtime" property="orderCreatetime" jdbcType="VARCHAR" />
+    <result column="order_finishtime" property="orderFinishtime" jdbcType="VARCHAR" />
+    <result column="order_cost" property="orderCost" jdbcType="INTEGER" />
+    <result column="order_status" property="orderStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_id, order_userid, order_pobkid, order_createtime, order_finishtime, order_cost, 
+    order_status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hcx.bean.OrdersExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from orders
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hcx.bean.OrdersExample" >
+    delete from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hcx.bean.Orders" >
+    insert into orders (order_id, order_userid, order_pobkid, 
+      order_createtime, order_finishtime, order_cost, 
+      order_status)
+    values (#{orderId,jdbcType=INTEGER}, #{orderUserid,jdbcType=INTEGER}, #{orderPobkid,jdbcType=INTEGER}, 
+      #{orderCreatetime,jdbcType=VARCHAR}, #{orderFinishtime,jdbcType=VARCHAR}, #{orderCost,jdbcType=INTEGER}, 
+      #{orderStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hcx.bean.Orders" >
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderUserid != null" >
+        order_userid,
+      </if>
+      <if test="orderPobkid != null" >
+        order_pobkid,
+      </if>
+      <if test="orderCreatetime != null" >
+        order_createtime,
+      </if>
+      <if test="orderFinishtime != null" >
+        order_finishtime,
+      </if>
+      <if test="orderCost != null" >
+        order_cost,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderUserid != null" >
+        #{orderUserid,jdbcType=INTEGER},
+      </if>
+      <if test="orderPobkid != null" >
+        #{orderPobkid,jdbcType=INTEGER},
+      </if>
+      <if test="orderCreatetime != null" >
+        #{orderCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderFinishtime != null" >
+        #{orderFinishtime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCost != null" >
+        #{orderCost,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hcx.bean.OrdersExample" resultType="java.lang.Integer" >
+    select count(*) from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orders
+    <set >
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderUserid != null" >
+        order_userid = #{record.orderUserid,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderPobkid != null" >
+        order_pobkid = #{record.orderPobkid,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderCreatetime != null" >
+        order_createtime = #{record.orderCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderFinishtime != null" >
+        order_finishtime = #{record.orderFinishtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderCost != null" >
+        order_cost = #{record.orderCost,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderStatus != null" >
+        order_status = #{record.orderStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orders
+    set order_id = #{record.orderId,jdbcType=INTEGER},
+      order_userid = #{record.orderUserid,jdbcType=INTEGER},
+      order_pobkid = #{record.orderPobkid,jdbcType=INTEGER},
+      order_createtime = #{record.orderCreatetime,jdbcType=VARCHAR},
+      order_finishtime = #{record.orderFinishtime,jdbcType=VARCHAR},
+      order_cost = #{record.orderCost,jdbcType=INTEGER},
+      order_status = #{record.orderStatus,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hcx.bean.Orders" >
+    update orders
+    <set >
+      <if test="orderUserid != null" >
+        order_userid = #{orderUserid,jdbcType=INTEGER},
+      </if>
+      <if test="orderPobkid != null" >
+        order_pobkid = #{orderPobkid,jdbcType=INTEGER},
+      </if>
+      <if test="orderCreatetime != null" >
+        order_createtime = #{orderCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderFinishtime != null" >
+        order_finishtime = #{orderFinishtime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCost != null" >
+        order_cost = #{orderCost,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hcx.bean.Orders" >
+    update orders
+    set order_userid = #{orderUserid,jdbcType=INTEGER},
+      order_pobkid = #{orderPobkid,jdbcType=INTEGER},
+      order_createtime = #{orderCreatetime,jdbcType=VARCHAR},
+      order_finishtime = #{orderFinishtime,jdbcType=VARCHAR},
+      order_cost = #{orderCost,jdbcType=INTEGER},
+      order_status = #{orderStatus,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>
