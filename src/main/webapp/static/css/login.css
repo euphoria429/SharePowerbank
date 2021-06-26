@@ -10,7 +10,7 @@ body{font-size: 14px; color: #666;}
 
 
 /* 登陆表单 */
-.zyl_lofo_main{background-color: rgba(255,255,255,0.9); width: 450px; height: 350px;position: absolute; right: 10%; top: 22%; z-index: 99999999;}
+.zyl_lofo_main{background-color: rgba(255,255,255,0.9); width: 450px; height: 400px;position: absolute; right: 10%; top: 22%; z-index: 99999999;}
 .zyl_lofo_icon{position: absolute; left: 5px; top: 8px; font-size: 20px;}
 .zyl_lofo_vercode{line-height: 35px; padding-left: 30px; font-size: 24px;}
 @media screen and (max-width: 768px) {

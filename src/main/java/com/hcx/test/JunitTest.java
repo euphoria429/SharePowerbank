@@ -111,7 +111,8 @@ public class JunitTest extends BaseTest {
 //        System.out.println(cupboardService.putUpdate(1));
 //        System.out.println(cupboardService.recycleUpdate(1));
 //        System.out.println(powerbankService.putUpdate(1));
-        System.out.println(powerbankService.recycleUpdate(17));
+//        System.out.println(powerbankService.recycleUpdate(17));
+        System.out.println(userService.register("123456","123456","test"));
     }
 
     @Test

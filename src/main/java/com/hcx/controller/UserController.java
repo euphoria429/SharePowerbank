@@ -54,6 +54,19 @@ public class UserController {
 
     }
 
+    @RequestMapping("/register")
+    public  String register(@RequestParam(value = "phone",required = false) String userPhone, @RequestParam(value = "password",required = false) String password, @RequestParam(value = "alias",required = false) String alias){
+        System.out.println(userPhone+password+alias);
+        int re=userService.register(userPhone,password,alias);
+        System.out.println(re);
+        if(re==1){
+            return "registerSuccess";
+        }else {
+            return "loginfaile";
+        }
+
+    }
+
     @RequestMapping(value="findAll",produces="text/html;charset=utf-8")
     public @ResponseBody String findAll(){
         List<User> list=userService.selectAll();

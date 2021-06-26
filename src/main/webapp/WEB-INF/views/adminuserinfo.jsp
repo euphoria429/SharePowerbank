@@ -60,10 +60,6 @@
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
             <table class="layui-hide" id="test" lay-filter="demo"></table>
-            <script type="text/html" id="barDemo">
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="pay">支付</a>
-            </script>
-
         </div>
     </div>
 
@@ -74,60 +70,21 @@
 </script>
 
 <script type="text/javascript">
-    var name= '<%=request.getSession().getAttribute("username")%>';
     // alert(name);
     layui.use('table', function () {
         var table = layui.table;
         table.render({
             elem: '#test'
-            , url: '/orders/findAll'
+            , url: '/user/findAll'
             , cols: [[
-                {field: 'orderId', width: 80, title: '订单编号', sort: true}
-                , {field: 'orderUserid', width: 120, title: '用户id', sort: true}
-                , {field: 'orderPobkid', width: 120, title: '充电宝编号', sort: true}
-                ,{field: 'orderCreatetime', width: 200, title: '创建时间'}
-                ,{field: 'orderFinishtime', width: 200, title: '结束时间'}
-                ,{field: 'orderCost', width: 120, title: '结算金额'}
-                ,{field: 'orderStatus', width: 120, title: '订单状态'}
-                , {field: 'right', title: '操作', toolbar: "#barDemo"}
+                {field: 'userId', width: 80, title: '用户编号', sort: true}
+                , {field: 'userPhone', width: 130, title: '手机号', sort: true}
+                , {field: 'userAlias', width: 130, title: '昵称', sort: true}
+                ,{field: 'userBalance', width: 130, title: '余额'}
             ]]
             , page: false
             , height: 700
             , id: 'testTable'
-        });
-    });
-
-    layui.use('table', function () {
-        var table = layui.table;
-        //监听工具条
-        table.on('tool(demo)', function (obj) {
-            var data = obj.data;
-            if (obj.event === 'pay') {
-                if(data.orderStatus!="未支付"){
-                    layer.msg("不在可支付状态", {icon: 5});
-                }else{
-                    layer.confirm('确定支付', function (index) {
-                        $.ajax({
-                            url: "/orders/payorder",
-                            type: "POST",
-                            data: {"order_id": data.orderId,"username":name},
-                            success: function (data) {
-                                var json = JSON.parse(data);
-                                if (json.result == "1") {
-                                    //关闭弹框
-                                    layer.close(index);
-                                    layer.msg("支付成功", {icon: 6});
-                                    setTimeout('location.reload()',1000);//定时刷新
-                                } else {
-                                    layer.msg("支付失败", {icon: 5});
-                                }
-                            }
-                        });
-                        // layer.alert("支付+查看ID : " + data.orderId + " 的行"+name);
-                    });
-                }
-
-            }
         });
     });
 </script>

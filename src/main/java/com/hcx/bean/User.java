@@ -11,6 +11,15 @@ public class User {
 
     private Float userBalance;
 
+    public User() {
+    }
+
+    public User(String userPhone, String userAlias, String userPassword) {
+        this.userPhone = userPhone;
+        this.userAlias = userAlias;
+        this.userPassword = userPassword;
+    }
+
     public Integer getUserId() {
         return userId;
     }

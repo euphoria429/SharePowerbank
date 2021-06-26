@@ -95,11 +95,49 @@
                 <br>
                 <button id="adminLogin" class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit="" lay-filter="demo2" >后台登录</button>
             </div>
+            <div class="layui-col-sm12 layui-col-md12">
+                <br>
+                <button id="userResigter" class="layui-btn layui-btn-fluid layui-btn-primary " lay-submit="" lay-filter="demo3" >用户注册</button>
+            </div>
         </form>
     </div>
 </div>
 <!-- LoginForm End -->
+<div style="display: none;" id="gb">
+    <form class="layui-form"  id="register" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="phone" required lay-verify="phones" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
 
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户密码</label>
+            <div class="layui-input-inline">
+                <input type="password" name="password" required lay-verify="pwd" placeholder="请输入密码" autocomplete="off" class="layui-input" id="pass1">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认密码</label>
+            <div class="layui-input-inline">
+                <input type="password" name="passwords" required lay-verify="pwd" placeholder="请再次输入密码" autocomplete="off" class="layui-input" id="pass2">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户昵称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="alias"  placeholder="请输入昵称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
 
 <!-- Jquery Js -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
@@ -117,6 +155,47 @@
 
         //自定义验证规则
         //要放在form.on外面，千万不能放在提交步骤中，否则会不触发
+
+        $(function() {
+            $("#userResigter").click(function() {
+                layer.open({
+                    type: 1,
+                    title: "注册页面",
+                    area: ['400px', '400px'],
+                    offset:'30%',
+                    content: $("#gb"),
+                    cancel: function() {
+                        // 你点击右上角 X 取消后要做什么
+                        setTimeout('window.location.reload()', 1);
+                    },
+                    success: function() {
+                        form.on('submit(formDemo)', function(data) {
+                            var formObj = document.getElementById("register");
+                            formObj.action="/user/register";
+                            formObj.method="post";
+                            formObj.submit();
+                        });
+                    }
+                })
+                form.render();
+            })
+
+            //验证输入的密码是否相同；
+            $("#pass2").blur(function() {
+                var pass1 = $("#pass1").val();
+                var pass2 = $("#pass2").val();
+                if(pass1 != pass2) {
+                    layer.msg("两次输入的密码不一致", {
+                        "icon": 2,
+                        "time": 2000
+                    });
+                    $("#pass2").val("");
+                    return false;
+                }
+                return true;
+            });
+        });
+
         form.verify({
             userName: function(value){
                 if(value.length < 5){

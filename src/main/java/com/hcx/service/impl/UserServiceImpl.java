@@ -88,4 +88,13 @@ public class UserServiceImpl implements UserService {
         return userMapper.updateByExampleSelective(user,example);
     }
 
+    public int register(String user_phone, String user_password, String user_alias) {
+        User user=new User();
+        user.setUserPhone(user_phone);
+        user.setUserPassword(user_password);
+        user.setUserAlias(user_alias);
+        user.setUserBalance((float)0);
+        return userMapper.insert(user);
+    }
+
 }

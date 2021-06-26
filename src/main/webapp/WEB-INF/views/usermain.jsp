@@ -198,7 +198,11 @@
                     shadeClose:false,           //弹框外的地方是否可以点击
                     offset:'30%',
                     area:['60%','50%'],
-                    content:'/orders/orderpage?cup_id='+data.cupboardId
+                    content:'/orders/orderpage?cup_id='+data.cupboardId,
+                    cancel: function() {
+                        // 你点击右上角 X 取消后要做什么
+                        setTimeout('Display_1()', 1);
+                    }
                 });
                     // $.ajax({
                     //     url: "/cupboard/returnbank",

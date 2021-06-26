@@ -21,4 +21,5 @@ public interface UserService {
     int deduct(int user_id,int cost);
 
     int addMoney(String username, float money2);
+    int register(String user_phone,String user_password,String user_alias);//注册
 }
