@@ -7,6 +7,14 @@ public class Powerbank {
 
     private String pobkStatus;
 
+    public Powerbank() {
+    }
+
+    public Powerbank(Integer pobkCupboardId, String pobkStatus) {
+        this.pobkCupboardId = pobkCupboardId;
+        this.pobkStatus = pobkStatus;
+    }
+
     public Integer getPobkId() {
         return pobkId;
     }

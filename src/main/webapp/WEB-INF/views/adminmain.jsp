@@ -62,8 +62,8 @@
             <div style="width:800px;height:550px;border:#ccc solid 1px;" id="container"></div>
             <table class="layui-hide" id="test" lay-filter="demo"></table>
             <script type="text/html" id="barDemo">
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="lent">借用</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="retu">归还</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="put">投放</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="recycle">查看</a>
             </script>
         </div>
     </div>
@@ -183,36 +183,38 @@
         //监听工具条
         table.on('tool(demo)', function (obj) {
             var data = obj.data;
-            if (obj.event === 'lent') {
-                layer.confirm('确定租借', function (index) {
+            //投放充电宝
+            if (obj.event === 'put') {
+                layer.confirm('确定投放', function (index) {
                     $.ajax({
-                        url: "/orders/lentPobk",
+                        url: "/powerbank/putPobk",
                         type: "POST",
-                        data: {"cup_id": data.cupboardId,"username":name},
+                        data: {"cup_id": data.cupboardId},
                         success: function (data) {
                             console.log(data);
                             var json = JSON.parse(data);
                             if (json.result == "1") {
                                 //关闭弹框
                                 layer.close(index);
-                                layer.msg("租借成功", {icon: 6});
+                                layer.msg("投放成功", {icon: 6});
                                 Display_1();//刷新页面
                             } else {
-                                layer.msg("租借失败", {icon: 5});
+                                layer.msg("投放失败", {icon: 5});
                             }
                         }
                     });
                     // layer.alert("借用+查看ID : " + data.cupboardId + " 的行");
                 });
             }
-            else if (obj.event === 'retu') {
+            //回收充电宝
+            else if (obj.event === 'recycle') {
                 layer.open({
                     type:2,
-                    title:'请选择未归还的订单',
+                    title:'请选择要回收的充电宝',
                     shadeClose:false,           //弹框外的地方是否可以点击
                     offset:'30%',
-                    area:['60%','50%'],
-                    content:'/orders/orderpage?cup_id='+data.cupboardId
+                    area:['40%','60%'],
+                    content:'/powerbank/pobkpage?cup_id='+data.cupboardId
                 });
 
             }

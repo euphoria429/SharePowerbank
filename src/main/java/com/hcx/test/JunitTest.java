@@ -107,7 +107,11 @@ public class JunitTest extends BaseTest {
 //        System.out.println(ordersService.payOrder(4));
 //        System.out.println(userService.addMoney("17520098429",12));
 //        System.out.println(ordersService.delOrderByOrderId(44));
-        System.out.println(ordersService.adminChangeCost(48,5));
+//        System.out.println(ordersService.adminChangeCost(48,5));
+//        System.out.println(cupboardService.putUpdate(1));
+//        System.out.println(cupboardService.recycleUpdate(1));
+//        System.out.println(powerbankService.putUpdate(1));
+        System.out.println(powerbankService.recycleUpdate(17));
     }
 
     @Test

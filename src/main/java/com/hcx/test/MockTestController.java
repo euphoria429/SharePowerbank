@@ -192,4 +192,58 @@ public class  MockTestController
                 .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
         System.out.println("-----返回的json = " + responseString);
     }
+
+    @Test
+    public void getAllCategoryTest10() throws Exception
+    {
+        String responseString = mockMvc.perform
+                (
+                        get("/powerbank/putPobk")          //请求的url,请求的方法是get
+                                //get("/user/showUser2")          //请求的url,请求的方法是get
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)//数据的格式
+                                .param("cup_id","1")
+                                //添加参数(可以添加多个)
+//                                .param("cost","3")   //添加参数(可以添加多个)
+                )
+                .andExpect(status().isOk())    //返回的状态是200
+                .andDo(print())         //打印出请求和相应的内容
+                .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
+        System.out.println("-----返回的json = " + responseString);
+    }
+
+    @Test
+    public void getAllCategoryTest11() throws Exception
+    {
+        String responseString = mockMvc.perform
+                (
+                        get("/powerbank/showPobkByCupId")          //请求的url,请求的方法是get
+                                //get("/user/showUser2")          //请求的url,请求的方法是get
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)//数据的格式
+                                .param("cup_id","2")
+                        //添加参数(可以添加多个)
+//                                .param("cost","3")   //添加参数(可以添加多个)
+                )
+                .andExpect(status().isOk())    //返回的状态是200
+                .andDo(print())         //打印出请求和相应的内容
+                .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
+        System.out.println("-----返回的json = " + responseString);
+    }
+
+    @Test
+    public void getAllCategoryTest12() throws Exception
+    {
+        String responseString = mockMvc.perform
+                (
+                        get("/powerbank/recyclePobk")          //请求的url,请求的方法是get
+                                //get("/user/showUser2")          //请求的url,请求的方法是get
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)//数据的格式
+                                .param("cup_id","2")
+                        //添加参数(可以添加多个)
+                                .param("pobk_id","9")   //添加参数(可以添加多个)
+                )
+                .andExpect(status().isOk())    //返回的状态是200
+                .andDo(print())         //打印出请求和相应的内容
+                .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
+        System.out.println("-----返回的json = " + responseString);
+    }
 }

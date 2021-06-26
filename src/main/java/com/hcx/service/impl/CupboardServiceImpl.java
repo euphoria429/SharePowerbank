@@ -39,7 +39,7 @@ public class CupboardServiceImpl implements CupboardService {
     }
 
     public int lentupdate(Integer cupboardId) {
-        int num=findAvailable(cupboardId)-1;//数量-1
+        int num=findAvailable(cupboardId)-1;//可用数量-1
         CupboardExample example=new CupboardExample();
         CupboardExample.Criteria criteria=example.createCriteria();
         criteria.andCupboardIdEqualTo(cupboardId);
@@ -49,12 +49,36 @@ public class CupboardServiceImpl implements CupboardService {
     }
 
     public int avaliUpdate(int cup_id) {
-        int num=findAvailable(cup_id)+1;//数量+1
+        int num=findAvailable(cup_id)+1;//可用数量+1
         CupboardExample example=new CupboardExample();
         CupboardExample.Criteria criteria=example.createCriteria();
         criteria.andCupboardIdEqualTo(cup_id);
         Cupboard cupboard=new Cupboard();
         cupboard.setPobkAvailableNum(num);
+        return cupboardMapper.updateByExampleSelective(cupboard,example);
+    }
+
+    public int putUpdate(int cup_id) {
+        //投放后总数,可用数+1
+        avaliUpdate(cup_id);//可用数+1
+        int num=findTotal(cup_id)+1;//总数+1
+        CupboardExample example=new CupboardExample();
+        CupboardExample.Criteria criteria=example.createCriteria();
+        criteria.andCupboardIdEqualTo(cup_id);
+        Cupboard cupboard=new Cupboard();
+        cupboard.setPobkNum(num);
+        return cupboardMapper.updateByExampleSelective(cupboard,example);
+    }
+
+    public int recycleUpdate(int cup_id) {
+        //回收后总数,可用数-1
+        lentupdate(cup_id);//可用数-1
+        int num=findTotal(cup_id)-1;//总数-1
+        CupboardExample example=new CupboardExample();
+        CupboardExample.Criteria criteria=example.createCriteria();
+        criteria.andCupboardIdEqualTo(cup_id);
+        Cupboard cupboard=new Cupboard();
+        cupboard.setPobkNum(num);
         return cupboardMapper.updateByExampleSelective(cupboard,example);
     }
 
