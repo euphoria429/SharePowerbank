@@ -67,15 +67,6 @@
             </script>
         </div>
     </div>
-    <%--渲染--%>
-    <div id="openOrderBox" style="display: none; padding: 10px;">
-        <table id="openOrderTable" lay-filter="openOrderTable">
-            <h4 style="text-align: center">订单列表</h4>
-            <script type="text/html" id="barDemo2">
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="retu2">归还</a>
-            </script>
-        </table>
-    </div>
 
 </div>
 <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
@@ -185,11 +176,13 @@
                         type: "POST",
                         data: {"cup_id": data.cupboardId,"username":name},
                         success: function (data) {
+                            console.log(data);
                             var json = JSON.parse(data);
                             if (json.result == "1") {
                                 //关闭弹框
                                 layer.close(index);
                                 layer.msg("租借成功", {icon: 6});
+                                Display_1();//刷新页面
                             } else {
                                 layer.msg("租借失败", {icon: 5});
                             }

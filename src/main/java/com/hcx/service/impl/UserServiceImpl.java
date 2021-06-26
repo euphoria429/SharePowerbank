@@ -77,4 +77,15 @@ public class UserServiceImpl implements UserService {
         return userMapper.updateByExampleSelective(user,example);
     }
 
+    public int addMoney(String username, float money2) {
+        float balcane=userMapper.findbyuser_phone(username).getUserBalance();
+        float after_balance=balcane+money2;//充值之后的余额
+        UserExample example=new UserExample();
+        UserExample.Criteria criteria=example.createCriteria();
+        criteria.andUserPhoneEqualTo(username);
+        User user=new User();
+        user.setUserBalance(after_balance);
+        return userMapper.updateByExampleSelective(user,example);
+    }
+
 }

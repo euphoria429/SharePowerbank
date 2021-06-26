@@ -121,4 +121,39 @@ public class  MockTestController
                 .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
         System.out.println("-----返回的json = " + responseString);
     }
+
+    @Test
+    public void getAllCategoryTest6() throws Exception
+    {
+        String responseString = mockMvc.perform
+                (
+                        get("/user/showInfo")          //请求的url,请求的方法是get
+                                //get("/user/showUser2")          //请求的url,请求的方法是get
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)//数据的格式
+                                .param("username","17520098429")   //添加参数(可以添加多个)
+                        //.param("id","3")   //添加参数(可以添加多个)
+                )
+                .andExpect(status().isOk())    //返回的状态是200
+                .andDo(print())         //打印出请求和相应的内容
+                .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
+        System.out.println("-----返回的json = " + responseString);
+    }
+
+    @Test
+    public void getAllCategoryTest7() throws Exception
+    {
+        String responseString = mockMvc.perform
+                (
+                        get("/user/addmoney")          //请求的url,请求的方法是get
+                                //get("/user/showUser2")          //请求的url,请求的方法是get
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)//数据的格式
+                                .param("username","17520098429")
+                                .param("money","15") //添加参数(可以添加多个)
+                        //.param("id","3")   //添加参数(可以添加多个)
+                )
+                .andExpect(status().isOk())    //返回的状态是200
+                .andDo(print())         //打印出请求和相应的内容
+                .andReturn().getResponse().getContentAsString();   //将相应的数据转换为字符串
+        System.out.println("-----返回的json = " + responseString);
+    }
 }

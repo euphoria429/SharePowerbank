@@ -3,6 +3,7 @@ package com.hcx.controller;
 import com.hcx.bean.User;
 import com.hcx.service.UserService;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,4 +58,30 @@ public class UserController {
         String jso="{\"code\":0,\"msg\":\"\",\"count\":"+3+",\"data\":"+js+"}";
         return jso;
     }
+
+    @RequestMapping(value = "showInfo",produces = "text/html;charset=utf-8")
+    public @ResponseBody String showInfo(String username) {
+        User user = userService.selectByPhone(username);//得到用户
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("user_id",user.getUserId());
+        jsonObject.put("user_phone",user.getUserPhone());
+        jsonObject.put("user_alias",user.getUserAlias());
+        jsonObject.put("user_balance",user.getUserBalance());
+//        String jso = "{\"code\":0,\"msg\":\"\",\"count\":" + 1 + ",\"data\":" + js + "}";
+        return jsonObject.toString();
+    }
+
+    @RequestMapping(value = "addmoney",produces = "text/html;charset=utf-8")
+    public @ResponseBody String addmoney(String username,int money){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("msg",1);
+        float money2=(float)money;
+        if(userService.addMoney(username,money2)==1) {
+            jsonObject.put("result","1");
+        }else{
+            jsonObject.put("result","0");
+        }
+        return jsonObject.toString();
+    }
+
 }

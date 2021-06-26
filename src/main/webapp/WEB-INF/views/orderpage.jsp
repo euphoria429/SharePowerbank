@@ -65,6 +65,7 @@
                                 //关闭弹框
                                 layer.close(index);
                                 layer.msg("归还成功", {icon: 6});
+                                location.reload();
                             } else {
                                 layer.msg("归还失败", {icon: 5});
                             }

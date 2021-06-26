@@ -19,4 +19,6 @@ public interface UserService {
     public List<User> selectByAlias(String Alias);
 
     int deduct(int user_id,int cost);
+
+    int addMoney(String username, float money2);
 }
