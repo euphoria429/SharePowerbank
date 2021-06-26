@@ -32,18 +32,12 @@
                     <div class="zyl_login_cont"></div>
                 </div>
                 <div>
-                    <img src="img/carousel/01.jpg" />
-                </div>
-                <div>
                     <div class="background">
                         <span></span><span></span><span></span>
                         <span></span><span></span><span></span>
                         <span></span><span></span><span></span>
                         <span></span><span></span><span></span>
                     </div>
-                </div>
-                <div>
-                    <img src="img/carousel/03.jpg" />
                 </div>
             </div>
         </div>
@@ -67,7 +61,7 @@
         <legend>欢迎登陆 - GDPU充电宝管理平台</legend>
     </fieldset>
     <div class="layui-row layui-col-space15">
-        <form class="layui-form zyl_pad_01" action="/user/login">
+        <form id="myForm" class="layui-form zyl_pad_01" >
             <div class="layui-col-sm12 layui-col-md12">
                 <div class="layui-form-item">
                     <input type="text" name="userName" lay-verify="required|userName" autocomplete="off" placeholder="账号" class="layui-input">
@@ -94,7 +88,12 @@
                 </div>
             </div>
             <div class="layui-col-sm12 layui-col-md12">
-                <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="demo1" type="submit">立即登录</button>
+                <button id="userLogin" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="demo1" >用户登录</button>
+            </div>
+
+            <div class="layui-col-sm12 layui-col-md12">
+                <br>
+                <button id="adminLogin" class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit="" lay-filter="demo2" >后台登录</button>
             </div>
         </form>
     </div>
@@ -111,11 +110,13 @@
 <!-- ZylVerificationCode Js-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/assembly/zylVerificationCode/zylVerificationCode.js"></script>
 <script>
+
     layui.use(['carousel', 'form'], function(){
         var carousel = layui.carousel
             ,form = layui.form;
 
         //自定义验证规则
+        //要放在form.on外面，千万不能放在提交步骤中，否则会不触发
         form.verify({
             userName: function(value){
                 if(value.length < 5){
@@ -135,27 +136,19 @@
             }
         });
 
-        //监听提交
-        // form.on('submit(demo1)', function(data){
-        //     // layer.alert(JSON.stringify(data.field),{
-        //     //     title: '最终的提交信息'
-        //     // })
-        //     // return false;
-        //     var ajaxReturnData;
-        //     $.ajax(
-        //         {
-        //             url:'/user/login',
-        //             type:'post',
-        //             async:false,
-        //             data:data.field,
-        //             success:function (data) {
-        //                 ajaxReturnData=data;
-        //             }
-        //         }
-        //     );
-        //     // 登陆成功
-        // });
+        form.on("submit(demo1)",function (data) {
+            var formObj = document.getElementById("myForm");
+            formObj.action="/user/login";
+            formObj.method="post";
+            formObj.submit();
+        })
 
+        form.on("submit(demo2)",function (data){
+            var formObj = document.getElementById("myForm");
+            formObj.action="/admin/login";
+            formObj.method="post";
+            formObj.submit();
+        })
 
         //设置轮播主体高度
         var zyl_login_height = $(window).height()/1.3;

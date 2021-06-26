@@ -14,7 +14,7 @@
     <meta name="keywords" content="百度地图,百度地图API，百度地图自定义工具，百度地图所见即所得工具" />
     <meta name="description" content="百度地图API自定义地图，帮助用户在可视化操作下生成百度地图" />
 
-    <title>用户中心</title>
+    <title>后台管理</title>
     <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
     <script src="${pageContext.request.contextPath}/static/js/jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
 
@@ -29,7 +29,7 @@
 <body>
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo layui-hide-xs layui-bg-black">用户中心</div>
+        <div class="layui-logo layui-hide-xs layui-bg-black">后台管理</div>
         <!-- 头部区域（可配合layui 已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
             <!-- 移动端显示 -->
@@ -40,8 +40,8 @@
         </ul>
 
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">${username}</li>
-            <li class="layui-nav-item"><a href="/user/userLogout">退出登录</a></li>
+            <li class="layui-nav-item">${admin}</li>
+            <li class="layui-nav-item"><a href="/admin/adminLogout">退出登录</a></li>
         </ul>
     </div>
 
@@ -49,9 +49,9 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree layui-bg-black" lay-filter="test">
-                <li class="layui-nav-item"><a href="/user/mainpage">借充电宝</a></li>
-                <li class="layui-nav-item"><a href="">历史订单</a></li>
-                <li class="layui-nav-item"><a href="/user/infopage">个人信息</a></li>
+                <li class="layui-nav-item"><a href="/admin/mainpage">电宝管理</a></li>
+                <li class="layui-nav-item"><a href="/admin/orderpage">订单管理</a></li>
+                <li class="layui-nav-item"><a href="/admin/infopage">用户管理</a></li>
             </ul>
         </div>
     </div>
@@ -59,11 +59,10 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-                <table class="layui-hide" id="test" lay-filter="demo"></table>
-                <script type="text/html" id="barDemo">
-                    <a class="layui-btn  layui-btn-xs" lay-event="pay">支付</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-                </script>
+            <table class="layui-hide" id="test" lay-filter="demo"></table>
+            <script type="text/html" id="barDemo">
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="pay">支付</a>
+            </script>
 
         </div>
     </div>
@@ -81,9 +80,7 @@
         var table = layui.table;
         table.render({
             elem: '#test'
-            , url: '/orders/findOrderByName'
-            ,method:'post'
-            ,where:{"username":name}
+            , url: '/orders/findAll'
             , cols: [[
                 {field: 'orderId', width: 80, title: '订单编号', sort: true}
                 , {field: 'orderUserid', width: 120, title: '用户id', sort: true}
@@ -107,11 +104,9 @@
             var data = obj.data;
             if (obj.event === 'pay') {
                 if(data.orderStatus!="未支付"){
-                    // layer.close(index);
                     layer.msg("不在可支付状态", {icon: 5});
                 }else{
                     layer.confirm('确定支付', function (index) {
-
                         $.ajax({
                             url: "/orders/payorder",
                             type: "POST",
@@ -129,32 +124,6 @@
                             }
                         });
                         // layer.alert("支付+查看ID : " + data.orderId + " 的行"+name);
-                    });
-                }
-
-            }
-            if (obj.event === 'del') {
-                if(data.orderStatus!="已支付"){
-                    layer.msg("不在可删除状态", {icon: 5});
-                }else{
-                    layer.confirm('确定删除', function (index) {
-                        $.ajax({
-                            url: "/orders/delorder",
-                            type: "POST",
-                            data: {"order_id": data.orderId},
-                            success: function (data) {
-                                var json = JSON.parse(data);
-                                if (json.result == "1") {
-                                    //关闭弹框
-                                    layer.close(index);
-                                    layer.msg("删除成功", {icon: 6});
-                                    setTimeout('location.reload()',1000);//定时刷新
-                                } else {
-                                    layer.msg("删除失败", {icon: 5});
-                                }
-                            }
-                        });
-
                     });
                 }
 

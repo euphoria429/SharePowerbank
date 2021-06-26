@@ -104,4 +104,17 @@ public class OrdersServiceImpl implements OrdersService {
         return ordersMapper.updateByExampleSelective(orders,example);
     }
 
+    public int delOrderByOrderId(int order_id) {
+        return ordersMapper.deleteByPrimaryKey(order_id);
+    }
+
+    public int adminChangeCost(int order_id, int cost) {
+        OrdersExample example=new OrdersExample();
+        OrdersExample.Criteria criteria=example.createCriteria();
+        criteria.andOrderIdEqualTo(order_id);
+        Orders orders=new Orders();
+        orders.setOrderCost(cost);
+        return ordersMapper.updateByExampleSelective(orders,example);
+    }
+
 }

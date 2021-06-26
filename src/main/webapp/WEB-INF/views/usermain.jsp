@@ -41,7 +41,7 @@
 
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">${username}</li>
-            <li class="layui-nav-item"><a href="">退出登录</a></li>
+            <li class="layui-nav-item"><a href="/user/userLogout">退出登录</a></li>
         </ul>
     </div>
 
@@ -182,7 +182,7 @@
                                 //关闭弹框
                                 layer.close(index);
                                 layer.msg("租借成功", {icon: 6});
-                                Display_1();//刷新页面
+                                setTimeout('Display_1()',500);//刷新页面
                             } else {
                                 layer.msg("租借失败", {icon: 5});
                             }

@@ -2,13 +2,6 @@
   Created by IntelliJ IDEA.
   User: 13545
   Date: 2021/6/22
-  Time: 23:01
-  To change this template use File | Settings | File Templates.
---%>
-<%--
-  Created by IntelliJ IDEA.
-  User: 13545
-  Date: 2021/6/22
   Time: 22:31
   To change this template use File | Settings | File Templates.
 --%>
@@ -21,8 +14,9 @@
     <meta name="keywords" content="百度地图,百度地图API，百度地图自定义工具，百度地图所见即所得工具" />
     <meta name="description" content="百度地图API自定义地图，帮助用户在可视化操作下生成百度地图" />
 
-    <title>用户中心</title>
+    <title>后台管理</title>
     <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+    <script src="${pageContext.request.contextPath}/static/js/jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
 
     <style type="text/css">
         html,body{margin:0;padding:0;}
@@ -35,7 +29,7 @@
 <body>
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo layui-hide-xs layui-bg-black">用户中心</div>
+        <div class="layui-logo layui-hide-xs layui-bg-black">后台管理</div>
         <!-- 头部区域（可配合layui 已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
             <!-- 移动端显示 -->
@@ -46,7 +40,8 @@
         </ul>
 
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item"><a href="">退出登录</a></li>
+            <li class="layui-nav-item">${admin}</li>
+            <li class="layui-nav-item"><a href="/admin/adminLogout">退出登录</a></li>
         </ul>
     </div>
 
@@ -54,10 +49,9 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree layui-bg-black" lay-filter="test">
-                <li class="layui-nav-item"><a href="">借充电宝</a></li>
-                <li class="layui-nav-item"><a href="">归还充电宝</a></li>
-                <li class="layui-nav-item"><a href="">历史订单</a></li>
-                <li class="layui-nav-item"><a href="">个人信息</a></li>
+                <li class="layui-nav-item"><a href="/admin/mainpage">电宝管理</a></li>
+                <li class="layui-nav-item"><a href="/admin/orderpage">订单管理</a></li>
+                <li class="layui-nav-item"><a href="/admin/infopage">用户管理</a></li>
             </ul>
         </div>
     </div>
@@ -65,7 +59,12 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <div style="width:697px;height:550px;border:#ccc solid 1px;" id="container"></div>
+            <div style="width:800px;height:550px;border:#ccc solid 1px;" id="container"></div>
+            <table class="layui-hide" id="test" lay-filter="demo"></table>
+            <script type="text/html" id="barDemo">
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="lent">借用</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="retu">归还</a>
+            </script>
         </div>
     </div>
 
@@ -76,6 +75,24 @@
 </script>
 
 <script type="text/javascript">
+
+    // window.onload = function(){
+    //         alert("开始");
+    //         var param1 = 1;
+    //         $.ajax({
+    //             type:"POST",
+    //             url:"/powerbank/showcount",
+    //             data:{'param1': param1},
+    //             success:function(data){
+    //                 alert(data);
+    //             }
+    //         });
+    //     alert("结束");
+    //
+    // }
+
+    var name= '<%=request.getSession().getAttribute("username")%>';
+
     var map = new BMapGL.Map('container');
     var point = new BMapGL.Point(113.40592,23.060042);
     var point2=new BMapGL.Point(113.406534,23.061098);
@@ -106,9 +123,12 @@
         height: 50,
         title: '4栋充电宝'
     };
-    var infoWindow = new BMapGL.InfoWindow('欢迎使用', opts);
-    var infoWindow2 = new BMapGL.InfoWindow('欢迎使用', opts2);
-    var infoWindow3 = new BMapGL.InfoWindow('欢迎使用', opts3);
+    var html_1='欢迎使用3号柜<br><input id="lent" type="button" value="查看"  onclick="return Display_1()"/> ';
+    var html_2='欢迎使用2号柜<br><input id="lent" type="button" value="查看"  onclick="return Display_1()"/> ';
+    var html_3='欢迎使用1号柜<br><input id="lent" type="button" value="查看"  onclick="return Display_1()"/> ';
+    var infoWindow = new BMapGL.InfoWindow(html_1, opts);
+    var infoWindow2 = new BMapGL.InfoWindow(html_2, opts2);
+    var infoWindow3 = new BMapGL.InfoWindow(html_3, opts3);
     // 点标记添加点击事件
     marker.addEventListener('click', function () {
         map.openInfoWindow(infoWindow, point); // 开启信息窗口
@@ -119,7 +139,85 @@
     marker3.addEventListener('click', function () {
         map.openInfoWindow(infoWindow3, point3); // 开启信息窗口
     });
+
+    function Display_1(){
+        layui.use('table', function () {
+            var table = layui.table;
+            table.render({
+                elem: '#test'
+                , url: '/cupboard/findInfo'
+                , cols: [[
+                    {field: 'cupboardId', width: 80, title: 'ID', sort: true}
+                    , {field: 'locationId', width: 120, title: '地址id', sort: true}
+                    , {field: 'pobkAvailableNum', width: 120, title: '可用充电宝', sort: true}
+                    ,{field: 'pobkNum', width: 120, title: '充电宝总数'}
+                    , {field: 'right', title: '操作', toolbar: "#barDemo"}
+                ]]
+                , page: false
+                , height: 298
+                , id: 'testTable'
+            });
+        });
+
+    }
+    //
+    // $("#logout").click(function () {
+    //
+    //     $.ajax({
+    //         type : "get",// 请求方式
+    //         url : "/admin/adminLogout",// 发送请求地址
+    //
+    //         // 请求成功后的回调函数有两个参数
+    //
+    //         success : function(data, textStatus) {
+    //
+    //
+    //         }
+    //
+    //     });
+    // })
+
+    layui.use('table', function () {
+        var table = layui.table;
+
+        //监听工具条
+        table.on('tool(demo)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'lent') {
+                layer.confirm('确定租借', function (index) {
+                    $.ajax({
+                        url: "/orders/lentPobk",
+                        type: "POST",
+                        data: {"cup_id": data.cupboardId,"username":name},
+                        success: function (data) {
+                            console.log(data);
+                            var json = JSON.parse(data);
+                            if (json.result == "1") {
+                                //关闭弹框
+                                layer.close(index);
+                                layer.msg("租借成功", {icon: 6});
+                                Display_1();//刷新页面
+                            } else {
+                                layer.msg("租借失败", {icon: 5});
+                            }
+                        }
+                    });
+                    // layer.alert("借用+查看ID : " + data.cupboardId + " 的行");
+                });
+            }
+            else if (obj.event === 'retu') {
+                layer.open({
+                    type:2,
+                    title:'请选择未归还的订单',
+                    shadeClose:false,           //弹框外的地方是否可以点击
+                    offset:'30%',
+                    area:['60%','50%'],
+                    content:'/orders/orderpage?cup_id='+data.cupboardId
+                });
+
+            }
+        });
+    });
 </script>
 </body>
 </html>
-

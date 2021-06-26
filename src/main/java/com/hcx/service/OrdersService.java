@@ -24,4 +24,8 @@ public interface OrdersService {
     Orders selectByOrderId(Integer orderId);
 
     int payOrder(int order_id);
+
+    int delOrderByOrderId(int order_id);
+
+    int adminChangeCost(int order_id, int cost);
 }

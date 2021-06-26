@@ -105,7 +105,9 @@ public class JunitTest extends BaseTest {
 //        System.out.println(ordersService.selectByOrderId(44).getOrderCost());
 //        System.out.println(userService.deduct(1,10));
 //        System.out.println(ordersService.payOrder(4));
-        System.out.println(userService.addMoney("17520098429",12));
+//        System.out.println(userService.addMoney("17520098429",12));
+//        System.out.println(ordersService.delOrderByOrderId(44));
+        System.out.println(ordersService.adminChangeCost(48,5));
     }
 
     @Test

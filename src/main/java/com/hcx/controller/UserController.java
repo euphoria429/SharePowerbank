@@ -36,7 +36,11 @@ public class UserController {
         return "userorder";
     }
 
-
+    @RequestMapping("/userLogout")
+    public String adminLogout(HttpSession session){
+        session.removeAttribute("username");
+        return "logout";
+    }
 
     @RequestMapping("/login")
     public  String login(@RequestParam(value = "userName",required = false) String userName, @RequestParam(value = "nuse",required = false) String password, HttpSession session){

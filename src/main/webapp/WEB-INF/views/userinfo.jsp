@@ -39,7 +39,8 @@
         </ul>
 
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item"><a href="">退出登录</a></li>
+            <li class="layui-nav-item">${username}</li>
+            <li class="layui-nav-item"><a href="/user/userLogout">退出登录</a></li>
         </ul>
     </div>
 
@@ -146,7 +147,7 @@
                                     //关闭弹框
                                     layer.close(index);
                                     layer.msg("充值成功", {icon: 6});
-                                    location.reload();
+                                    setTimeout('location.reload()',1000);//定时刷新
                                 } else {
                                     layer.msg("充值失败", {icon: 5});
                                 }

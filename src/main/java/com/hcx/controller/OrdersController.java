@@ -164,4 +164,37 @@ public class OrdersController {
         }
         return jsonObject.toString();
     }
+
+    @RequestMapping(value = "delorder",produces = "text/html;charset=utf-8")
+    @ResponseBody
+    public String delorder(int order_id){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("msg","1");
+        int del=ordersService.delOrderByOrderId(order_id);//删除订单，成功返回1
+        if(del==1){
+            jsonObject.put("result","1");
+        }else{
+            jsonObject.put("result","0");
+        }
+        return jsonObject.toString();
+    }
+
+    @RequestMapping(value = "changeCost",produces = "text/html;charset=utf-8")
+    @ResponseBody
+    public String changeCost(int order_id,int cost){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("msg","1");
+        System.out.println(cost);
+        if(cost<0){
+            jsonObject.put("result","0");
+            return jsonObject.toString();
+        }
+        int change=ordersService.adminChangeCost(order_id,cost);//修改订单金额，成功返回1
+        if(change==1){
+            jsonObject.put("result","1");
+        }else{
+            jsonObject.put("result","0");
+        }
+        return jsonObject.toString();
+    }
 }

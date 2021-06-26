@@ -32,10 +32,11 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         HttpSession session=request.getSession();
-        if(session.getAttribute("username")!=null){
+        if(session.getAttribute("username")!=null||session.getAttribute("admin")!=null){
             return true;
         }
         response.sendRedirect(request.getContextPath()+"/login.jsp");
         return  false;
+//        return true;
     }
 }
