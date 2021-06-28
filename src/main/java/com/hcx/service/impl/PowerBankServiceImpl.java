@@ -29,9 +29,6 @@ public class PowerBankServiceImpl implements PowerbankService {
     }
 
     public int lentStatus(Integer pobkId) {
-//        PowerbankExample example=new PowerbankExample();
-//        PowerbankExample.Criteria criteria=example.createCriteria();
-//        criteria.andPobkIdEqualTo(pobkId);
         Powerbank powerbank=new Powerbank();
         powerbank.setPobkId(pobkId);
         powerbank.setPobkCupboardId(0);
@@ -62,12 +59,6 @@ public class PowerBankServiceImpl implements PowerbankService {
     }
 
     public int recycleUpdate(int pobk_id) {
-//        OrdersExample example=new OrdersExample();
-//        OrdersExample.Criteria criteria=example.createCriteria();
-//        criteria.andOrderIdEqualTo(order_id);
-//        Orders orders=new Orders();
-//        orders.setOrderCost(cost);
-//        return ordersMapper.updateByExampleSelective(orders,example);
         PowerbankExample example=new PowerbankExample();
         PowerbankExample.Criteria criteria=example.createCriteria();
         criteria.andPobkIdEqualTo(pobk_id);

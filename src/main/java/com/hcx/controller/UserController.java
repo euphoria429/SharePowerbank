@@ -92,6 +92,10 @@ public class UserController {
     public @ResponseBody String addmoney(String username,int money){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg",1);
+        if(money<=0){
+            jsonObject.put("result","0");
+            return jsonObject.toString();
+        }
         float money2=(float)money;
         if(userService.addMoney(username,money2)==1) {
             jsonObject.put("result","1");

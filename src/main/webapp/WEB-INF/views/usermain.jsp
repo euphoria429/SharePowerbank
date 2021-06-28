@@ -49,7 +49,7 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree layui-bg-black" lay-filter="test">
-                <li class="layui-nav-item"><a href="">借充电宝</a></li>
+                <li class="layui-nav-item"><a href="/user/mainpage">借充电宝</a></li>
                 <li class="layui-nav-item"><a href="/user/orderpage">历史订单</a></li>
                 <li class="layui-nav-item"><a href="/user/infopage">个人信息</a></li>
             </ul>

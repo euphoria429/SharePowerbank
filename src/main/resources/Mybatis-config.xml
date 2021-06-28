@@ -20,7 +20,6 @@
     </plugins>
     <mappers>
         <mapper resource="mapper/AdminMapper.xml"></mapper>
-        <mapper resource="mapper/CostMapper.xml"></mapper>
         <mapper resource="mapper/CupboardMapper.xml"></mapper>
         <mapper resource="mapper/LocationMapper.xml"></mapper>
         <mapper resource="mapper/OrdersMapper.xml"></mapper>

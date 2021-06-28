@@ -28,5 +28,5 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    User findbyuser_phone(String phoneNumber);
+    User findbyuser_phone(String userPhone);
 }
