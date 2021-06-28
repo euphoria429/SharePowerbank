@@ -18,7 +18,11 @@ ssm+layui 校园共享充电宝系统 Spring MVC + Spring + Mybatis
 * Tomcat 8.5.5
 ### 后端：
 *使用Spring MVC + Spring + Mybatis，很初级的部分，甚至没有用到事务管理
+
 ### 前端：
 *使用layui框架，找别人的demo修修改改，就数据接口部分可以参考一下，其他地方就不用看了..
+
 #系统截图：
-* 
+* (https://github.com/euphoria429/SharePowerbank/blob/master/files/01.jpg)
+* (https://github.com/euphoria429/SharePowerbank/blob/master/files/02.jpg)
+* (https://github.com/euphoria429/SharePowerbank/blob/master/files/03.jpg)
